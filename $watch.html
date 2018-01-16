@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="myCtrl">
+        <p>
+            <input type="text" ng-model="iPhone.price">
+        </p>
+        <p>价格：{{iPhone.price | currency:'￥'}}</p>
+        <p>运费：{{iPhone.free | currency:'￥'}}</p>
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .controller('myCtrl', ['$scope', function ($scope) {
+                $scope.iPhone = {
+                    price: 3000,
+                    free: 100
+                };
+                $scope.$watch('iPhone.price', function (val, oldVal) {
+                    if ($scope.iPhone.price > 500) {
+                        $scope.iPhone.free = 0;
+                    } else {
+                        $scope.iPhone.free = 100;
+                    }
+                }, true)
+            }])
+
+    </script>
+</body>
+
+</html>

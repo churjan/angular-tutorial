@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="mainCtrl">
+        <input type="button" ng-value="text" ng-disabled="isdisabled" ng-click="test()">
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .controller('mainCtrl', ['$scope', '$interval', function ($scope, $interval) {
+                let countdown = 5;
+                $scope.text = countdown + '秒';
+                $scope.isdisabled = true;
+                let timer = $interval(function () {
+                    console.log($scope.text);
+                    countdown--;
+                    $scope.text = countdown + '秒';
+                    if (countdown == 0) {
+                        $interval.cancel(timer);
+                        $scope.text = '进入';
+                        $scope.isdisabled = false;
+                    }
+                }, 1000)
+
+                $scope.test=function(){
+                    alert('test')
+                }
+            }])
+
+    </script>
+</body>
+
+</html>

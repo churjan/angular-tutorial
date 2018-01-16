@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="mainCtrl">
+        <h1>{{text}}</h1>
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .factory('randomService', function () {
+                return function (num1, num2) {
+                    return Math.random() * (num2 - num1) + num1;
+                }
+            })
+            .controller('mainCtrl', ['$scope', 'randomService', function ($scope, randomService) {
+                $scope.text = randomService(5, 10);
+            }])
+
+    </script>
+</body>
+
+</html>

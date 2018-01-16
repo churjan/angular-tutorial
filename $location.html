@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="myCtrl">
+        
+    </div>
+
+
+    <script>
+        angular.module('myApp', [])
+            .controller('myCtrl', ['$scope','$location', function ($scope,$location) {
+                console.log($location);
+                console.log($location.absUrl());
+            }])
+            
+    </script>
+</body>
+
+</html>

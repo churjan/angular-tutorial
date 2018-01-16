@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
+    <style>
+        ul {
+            position: fixed;
+            right: 30px;
+            top: 20px;
+            list-style: none;
+            cursor: pointer;
+        }
+
+        div {
+            width: 300px;
+            height: 600px;
+            background: red;
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div ng-controller="mainCtrl">
+        <ul>
+            <li ng-repeat="id in [1,2,3,4,5]" ng-click="changeHashHandle('div'+$index)">导航{{$index+1}}</li>
+        </ul>
+        <div ng-repeat="item in [1,2,3,4,5]" ng-attr-id="{{'div'+$index}}">{{$index+1}}</div>
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .config(['$anchorScrollProvider', function ($anchorScrollProvider) {
+                $anchorScrollProvider.disableAutoScrolling();
+            }])
+            .run(['$anchorScroll', function ($anchorScroll) {
+                $anchorScroll.yOffset = 20;   // always scroll by 50 extra pixels
+            }])
+            .controller('mainCtrl', ['$scope', '$location', '$anchorScroll', function ($scope, $location, $anchorScroll) {
+                $scope.changeHashHandle = function (id) {
+                    $location.hash(id);
+                    $anchorScroll();
+                }
+            }])
+
+    </script>
+</body>
+
+</html>

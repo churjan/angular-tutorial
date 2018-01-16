@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular-route.min.js"></script>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular-animate.min.js"></script>
+    <style>
+        .box {
+            transition: 1s;
+            position: absolute;
+        }
+
+        .box.ng-enter {
+            opacity: 0;
+        }
+
+        .box.ng-enter-active {
+            opacity: 1;
+        }
+
+        .box.ng-leave {
+            opacity: 1;
+        }
+
+        .box.ng-leave-active {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div ng-controller="mainCtrl">
+        <a href="#/">首页</a>
+        <a href="#/news/hot">新闻</a>
+        <a href="#/forum">论坛</a>
+        <br>
+        <ng-view class="box"></ng-view>
+    </div>
+    <script>
+        angular.module('myApp', ['ngRoute', 'ngAnimate'])
+            .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+                $locationProvider.hashPrefix('');
+                $routeProvider
+                    .when('/', {
+                        template: '<h1>这是首页</h1>' +
+                            '<h1>path:{{$location.path()}}</h1>',
+                        controller: 'homeCtrl'
+                    })
+                    .when('/news/:id', {
+                        template: '<h1>这是新闻</h1>' +
+                            '<h1>path:{{$location.path()}}</h1>' +
+                            '<h1>{{params}}</h1>',
+                        controller: 'newsCtrl'
+                    })
+                    .when('/forum', {
+                        template: '<h1>这是论坛</h1>' +
+                            '<h1>path:{{$location.path()}}</h1>',
+                        controller: 'forumCtrl'
+                    })
+                    .otherwise({
+                        redirectTo: '/'
+                    })
+            }])
+            .run(['$rootScope', function ($rootScope) {
+                $rootScope.$on('$routeChangeStart', function (event, current, pre) {
+                    console.log('route start');
+                    console.log(event);
+                    console.log(current);
+                    console.log(pre);
+                });
+                $rootScope.$on('$routeChangeSuccess', function () {
+                    console.log('route success');
+                });
+            }])
+            .controller('mainCtrl', ['$scope', '$location', function ($scope, $location) {
+                $scope.$location = $location;
+            }])
+            .controller('homeCtrl', ['$scope', function ($scope) {
+
+            }])
+            .controller('newsCtrl', ['$scope', '$routeParams', function ($scope, $routeParams) {
+                $scope.params = $routeParams.id;
+            }])
+            .controller('forumCtrl', ['$scope', function ($scope) {
+
+            }])
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/angular.js/1.6.4/angular.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="mainCtrl">
+
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .controller('mainCtrl', ['$scope', '$q', function ($scope, $q) {
+                function asyn() {
+                    var def = $q.defer();
+                    def.resolve();
+                    return def.promise;
+                }
+                asyn().then(function () {
+                    console.log('成功');
+                })
+
+            }])
+
+    </script>
+</body>
+
+</html>
